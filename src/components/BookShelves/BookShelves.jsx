@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import BookList from './BookList'
+import BookList from '../BookList/BookList.jsx'
 import { Link } from 'react-router-dom'
+import styles from './Bookshelves.scss'
 
 class BookShelves extends Component {
     static propTypes = {
@@ -12,21 +13,21 @@ class BookShelves extends Component {
     state = { }
     render() {
         return (
-            <div className="list-books">
-                <div className="list-books-title">
+            <div>
+                <div className={styles.title}>
                     <h1>MyReads</h1>
                 </div>
-                <div className="list-books-content">
+                <div className={styles.content}>
                     {this.props.bookShelves.map((bookshelf) => (
-                        <div key={bookshelf.id} className="bookshelf">
-                            <h2 className="bookshelf-title">{bookshelf.title}</h2>
-                            <div className="bookshelf-books">
+                        <div key={bookshelf.id} className={styles.bookshelf}>
+                            <h2 className={styles.bookshelfTitle}>{bookshelf.title}</h2>
+                            <div className={styles.bookshelfBooks}>
                                 <BookList books={this.props.books.filter((book) => book.shelf === bookshelf.id )}  onBookTag={this.props.onBookTag} bookShelves={this.props.bookShelves} />
                             </div>
                         </div>
                     ))}
                 </div>
-                <div className="open-search">
+                <div className={styles.openSearch}>
                     <Link to="/search">Add a book</Link>
                 </div>
             </div>

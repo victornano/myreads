@@ -1,9 +1,9 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
-import * as BooksAPI from './BooksAPI'
-import BookShelves from './BookShelves.js'
-import Search from './Search.js'
-import './App.css'
+import * as BooksAPI from '../../BooksAPI'
+import BookShelves from '../BookShelves/BookShelves'
+import Search from '../Search/Search'
+import styles from './App.scss'
 
 class BooksApp extends React.Component {
     state = {
@@ -46,7 +46,7 @@ class BooksApp extends React.Component {
     }
     render() {
         return (
-            <div className="app">
+            <div className={styles.bg}>
                 <Route path="/search" render={() => (
                     <Search books={this.state.books} onBookTag={this.bookTag} bookShelves={this.state.bookShelves} />
                 )} />

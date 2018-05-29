@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import BookList from './BookList'
+import BookList from '../BookList/BookList'
 import { Link } from 'react-router-dom'
-import * as BooksAPI from './BooksAPI'
+import * as BooksAPI from '../../BooksAPI'
+import styles from './Search.scss'
 
 class Search extends Component {
     static propTypes = {
@@ -17,8 +18,8 @@ class Search extends Component {
         if (query.length > 0) {
             BooksAPI.search(query).then((searcResults) => {
                 // Update results shelf based on the books prop (Books API getAll)
-                if(this.props.books.length > 0 && searcResults){
-                    this.props.books.forEach(function(book) {
+                if (this.props.books.length > 0 && searcResults && searcResults.length > 0) {
+                    this.props.books.forEach(function (book) {
                         const matchingResult = searcResults.find((result) => result.id === book.id)
                         if (matchingResult) {
                             matchingResult.shelf = book.shelf
@@ -28,22 +29,22 @@ class Search extends Component {
                 this.setState({ searcResults })
             })
         }
-        else{
+        else {
             this.setState({ searcResults: [] })
         }
 
     }
     render() {
         return (
-            <div className="search-books">
-                <div className="search-books-bar">
-                <Link to="/" className="close-search" >Close</Link>
-                <div className="search-books-input-wrapper">
-                    <input type="text" placeholder="Search by title or author" onChange={(event) => this.updateQuery(event.target.value)} />
+            <div>
+                <div className={styles.bar}>
+                    <Link to="/" className={styles.close} >Close</Link>
+                    <div className={styles.inputWrapper}>
+                        <input type="text" placeholder="Search by title or author" onChange={(event) => this.updateQuery(event.target.value)} />
+                    </div>
                 </div>
-                </div>
-                <div className="search-books-results">
-                    <BookList books={this.state.searcResults}  onBookTag={this.props.onBookTag} bookShelves={this.props.bookShelves} />
+                <div className={styles.results}>
+                    <BookList books={this.state.searcResults} onBookTag={this.props.onBookTag} bookShelves={this.props.bookShelves} />
                 </div>
             </div>
         )
